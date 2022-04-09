@@ -1,12 +1,14 @@
-package ru.skypro;
+package ru.skypro.HW14;
 
 import ru.skypro.Exception.NotFoundException;
 
 import java.util.Objects;
 
 public class StringListImpl implements StringList {
+
     private String[] array = new String[13];
     private int size = 0;
+
 
     @Override
     public String add(String item) {

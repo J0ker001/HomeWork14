@@ -1,6 +1,7 @@
-package ru.skypro;
+package ru.skypro.HW14;
 
 public interface StringList {
+
 
     // Добавление элемента.
     // Вернуть добавленный элемент
