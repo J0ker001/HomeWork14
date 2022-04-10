@@ -6,18 +6,17 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class IntListImpl implements IntList {
-    private Integer[] array = new Integer[13];
+
+    private static int ARRAY_SIZE = 13;
+    private Integer[] array = new Integer[ARRAY_SIZE];
     private int size = 0;
 
     @Override
     public Integer add(Integer item) {
         if (size >= array.length) {
-            Integer[] extended = new Integer[array.length * 2];
-            System.arraycopy(array, 0, extended, 0, array.length);
-            array = extended;
+            growArray();
         }
-        array[size] = item;
-        size++;
+        array[size++] = item;
         return item;
     }
 
@@ -43,15 +42,9 @@ public class IntListImpl implements IntList {
 
     @Override
     public Integer remove(Integer item) {
-        int a = -1;
-        for (int i = 0; i < size; i++) {
-            if (item.equals(array[i])) {
-                a = i;
-                break;
-            }
-        }
-        if (a != -1) {
-            remove(a);
+        int i = indexOf(item);
+        if (i != -1) {
+            remove(i);
         } else {
             throw new NotFoundException();
         }
@@ -130,14 +123,10 @@ public class IntListImpl implements IntList {
 
     @Override
     public boolean isEmpty() {
-        boolean result = true;
-        for (Integer i : array) {
-            if (i != 0) {
-                result = false;
-                break;
-            }
+        if (size != 0) {
+            return false;
         }
-        return result;
+        return true;
     }
 
     @Override
@@ -171,6 +160,13 @@ public class IntListImpl implements IntList {
         sortInsertion(arr);
         return Arrays.binarySearch(arr, desired);
     }
+
+    private void growArray() {
+        Integer[] extended = new Integer[array.length * 2];
+        System.arraycopy(array, 0, extended, 0, array.length);
+        array = extended;
+    }
+
 }
 
 
