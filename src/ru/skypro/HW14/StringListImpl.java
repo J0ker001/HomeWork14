@@ -27,7 +27,7 @@ public class StringListImpl implements StringList {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
-        add(item);
+         add(item);
         for (int i = size - 1; i > index; i--) {
             array[i] = array[i - 1];
         }

@@ -7,15 +7,19 @@ import java.util.Objects;
 
 public class IntListImpl implements IntList {
 
-    private static int ARRAY_SIZE = 13;
-    private Integer[] array = new Integer[ARRAY_SIZE];
+    private static int capacity = 13;
+    private Integer[] array = new Integer[capacity];
     private int size = 0;
 
-    @Override
-    public Integer add(Integer item) {
+    private void growIfNeed() {
         if (size >= array.length) {
             growArray();
         }
+    }
+
+    @Override
+    public Integer add(Integer item) {
+        growIfNeed();
         array[size++] = item;
         return item;
     }
@@ -25,11 +29,12 @@ public class IntListImpl implements IntList {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
-        add(item);
+        growIfNeed();
         for (int i = size - 1; i > index; i--) {
             array[i] = array[i - 1];
         }
         array[index] = item;
+        size++;
         return item;
     }
 
@@ -41,10 +46,10 @@ public class IntListImpl implements IntList {
     }
 
     @Override
-    public Integer remove(Integer item) {
+    public Integer removeByValue(Integer item) {
         int i = indexOf(item);
         if (i != -1) {
-            remove(i);
+            removeByIndex(i);
         } else {
             throw new NotFoundException();
         }
@@ -52,7 +57,7 @@ public class IntListImpl implements IntList {
     }
 
     @Override
-    public Integer remove(int index) {
+    public Integer removeByIndex(int index) {
         Integer element = get(index);
         for (int i = index; i < size - 1; i++) {
             array[i] = array[i + 1];
@@ -137,11 +142,12 @@ public class IntListImpl implements IntList {
 
     @Override
     public Integer[] toArray() {
-        Integer[] newArray = new Integer[this.size];
-        for (int i = 0; i < newArray.length; i++) {
-            newArray[i] = this.get(i);
-        }
-        return newArray;
+//        Integer[] newArray = new Integer[this.size];
+//        for (int i = 0; i < newArray.length; i++) {
+//            newArray[i] = this.get(i);
+//        }
+//        return newArray;
+        return Arrays.copyOf(array, size);
     }
 
     private static void sortInsertion(Integer[] arr) {

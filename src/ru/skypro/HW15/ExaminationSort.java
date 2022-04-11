@@ -8,6 +8,7 @@ public class ExaminationSort {
     final int ARRAY_SIZE = 100_000;
     final int GEN_MIN = 200;
     final int GEN_MAX = 600;
+    private Random random = new Random(1);
 
     int[] arr = createArray();
     int[] arr1 = Arrays.copyOf(arr, arr.length);
@@ -17,7 +18,6 @@ public class ExaminationSort {
 
 
     private int random() {
-        Random random = new Random();
         return random.nextInt(GEN_MAX - GEN_MIN + 1);
     }
 

@@ -7,9 +7,9 @@ public interface IntList {
 
     Integer set(int index, Integer item);
 
-    Integer remove(Integer item);
+    Integer removeByValue(Integer item);
 
-    Integer remove(int index);
+    Integer removeByIndex(int index);
 
     boolean contains(Integer item);
 
