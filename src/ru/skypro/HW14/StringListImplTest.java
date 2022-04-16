@@ -22,8 +22,8 @@ class StringListImplTest {
     @org.junit.jupiter.api.Test
     void shouldAddByIndex1() {
         stringList.add("1");
-        stringList.add(0, "0");
-        assertEquals("0", stringList.get(0));
+        stringList.add(1, "1");
+        assertEquals("1", stringList.get(0));
         assertEquals("1", stringList.get(1));
     }
 
@@ -188,7 +188,7 @@ class StringListImplTest {
     @org.junit.jupiter.api.Test
     void toArray() {
         StringList stringList = new StringListImpl();
-        var expected = new String [0] ;
+        var expected = new String[0];
         assertArrayEquals(expected, stringList.toArray());
     }
 
@@ -197,7 +197,7 @@ class StringListImplTest {
         String str = "test";
         StringList stringList = new StringListImpl();
         stringList.add(str);
-        var expected = new String [1] ;
+        var expected = new String[1];
         expected[0] = str;
         assertArrayEquals(expected, stringList.toArray());
     }
@@ -207,9 +207,10 @@ class StringListImplTest {
         String str = "test";
         StringList stringList = new StringListImpl();
         stringList.add(str);
-        var expected = new String [1] ;
+        var expected = new String[1];
         expected[0] = "str";
-        assertFalse(expected.equals(stringList.toArray())); ;
+        assertFalse(expected.equals(stringList.toArray()));
+        ;
 
     }
 }
