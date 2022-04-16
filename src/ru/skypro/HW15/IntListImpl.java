@@ -7,8 +7,8 @@ import java.util.Objects;
 
 public class IntListImpl implements IntList {
 
-    private static int capacity = 13;
-    private Integer[] array = new Integer[capacity];
+    private static final int CAPACITY = 13;
+    private Integer[] array = new Integer[CAPACITY];
     private int size = 0;
 
     private void growIfNeed() {
@@ -146,7 +146,7 @@ public class IntListImpl implements IntList {
 //        for (int i = 0; i < newArray.length; i++) {
 //            newArray[i] = this.get(i);
 //        }
-//        return newArray;
+//        return newArray;    то же самое
         return Arrays.copyOf(array, size);
     }
 
