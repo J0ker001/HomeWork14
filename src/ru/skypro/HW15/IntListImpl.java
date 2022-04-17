@@ -10,6 +10,7 @@ public class IntListImpl implements IntList {
     private static final int CAPACITY = 13;
     private Integer[] array = new Integer[CAPACITY];
     private int size = 0;
+    private final double EXPANDED_ARRAY = 1.5;
 
     private void growIfNeed() {
         if (size >= array.length) {
@@ -142,11 +143,6 @@ public class IntListImpl implements IntList {
 
     @Override
     public Integer[] toArray() {
-//        Integer[] newArray = new Integer[this.size];
-//        for (int i = 0; i < newArray.length; i++) {
-//            newArray[i] = this.get(i);
-//        }
-//        return newArray;    то же самое
         return Arrays.copyOf(array, size);
     }
 
@@ -199,8 +195,8 @@ public class IntListImpl implements IntList {
     }
 
     private void growArray() {
-        double newCapacity = (array.length * 1.5);
-        Integer[] extended = new Integer[(int)Math.ceil(newCapacity)];
+        double newCapacity = (array.length * EXPANDED_ARRAY);
+        Integer[] extended = new Integer[(int) Math.ceil(newCapacity)];
         System.arraycopy(array, 0, extended, 0, array.length);
         array = extended;
     }
