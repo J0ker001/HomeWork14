@@ -10,6 +10,7 @@ public class IntListImpl implements IntList {
     private static final int CAPACITY = 13;
     private Integer[] array = new Integer[CAPACITY];
     private int size = 0;
+    private final double EXPANDED_ARRAY = 1.5;
 
     private void growIfNeed() {
         if (size >= array.length) {
@@ -142,37 +143,63 @@ public class IntListImpl implements IntList {
 
     @Override
     public Integer[] toArray() {
-//        Integer[] newArray = new Integer[this.size];
-//        for (int i = 0; i < newArray.length; i++) {
-//            newArray[i] = this.get(i);
-//        }
-//        return newArray;    то же самое
         return Arrays.copyOf(array, size);
     }
 
-    private static void sortInsertion(Integer[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            int temp = arr[i];
-            int j = i;
-            while (j > 0 && arr[j - 1] >= temp) {
-                arr[j] = arr[j - 1];
-                j--;
+    private static void mergeSort(Integer[] arr) {
+        if (arr.length < 2) {
+            return;
+        }
+        Integer mid = arr.length / 2;
+        Integer[] left = new Integer[mid];
+        Integer[] right = new Integer[arr.length - mid];
+
+        for (int i = 0; i < left.length; i++) {
+            left[i] = arr[i];
+        }
+
+        for (int i = 0; i < right.length; i++) {
+            right[i] = arr[mid + i];
+        }
+
+        mergeSort(left);
+        mergeSort(right);
+
+        merge(arr, left, right);
+    }
+
+    private static void merge(Integer[] arr, Integer[] left, Integer[] right) {
+
+        int mainP = 0;
+        int leftP = 0;
+        int rightP = 0;
+        while (leftP < left.length && rightP < right.length) {
+            if (left[leftP] <= right[rightP]) {
+                arr[mainP++] = left[leftP++];
+            } else {
+                arr[mainP++] = right[rightP++];
             }
-            arr[j] = temp;
+        }
+        while (leftP < left.length) {
+            arr[mainP++] = left[leftP++];
+        }
+        while (rightP < right.length) {
+            arr[mainP++] = right[rightP++];
         }
     }
 
+
     private int binarySearch(Integer[] arr, int desired) {
-        sortInsertion(arr);
+        mergeSort(arr);
         return Arrays.binarySearch(arr, desired);
     }
 
     private void growArray() {
-        Integer[] extended = new Integer[array.length * 2];
+        double newCapacity = (array.length * EXPANDED_ARRAY);
+        Integer[] extended = new Integer[(int) Math.ceil(newCapacity)];
         System.arraycopy(array, 0, extended, 0, array.length);
         array = extended;
     }
-
 }
 
 
